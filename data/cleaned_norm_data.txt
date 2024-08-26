@@ -1,0 +1,3 @@
+Видалені рядки, в яких значення download_avg і upload_avg відсутні. Усього 381 рядок.
+Колонки з не категоріяльними даними ("subscription_age", "bill_avg", "remaining_contract", "service_failure_count", "download_avg", "upload_avg", "download_over_limit") нормовані за методом min-max: x = (x - x_min) / (x_max - x_min)
+Колонка remaining_contract (в ориганільному файлі названа reamining_contract) видалена до моменту зʼясування, що означають дані і відсутність даних в цій колонці.
