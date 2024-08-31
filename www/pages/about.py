@@ -2,6 +2,8 @@ import os
 
 import streamlit as st
 
+from menu import menu
+
 
 def show_about():
 
@@ -16,3 +18,7 @@ def show_about():
         '''
     )
     st.image('images/logo.svg', width=200)
+
+
+menu()
+show_about()

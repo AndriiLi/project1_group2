@@ -5,9 +5,10 @@ name = "pypi"
 
 [packages]
 streamlit = "*"
-streamlit-navigation-bar = "*"
-tensorflow = "*"
 numpy = "*"
+matplotlib = "*"
+tensorflow = "*"
+scikit-learn = "*"
 
 [dev-packages]
 

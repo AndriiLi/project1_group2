@@ -1,4 +1,5 @@
 import streamlit as st
+from menu import menu
 
 
 def show_home():
@@ -7,3 +8,7 @@ def show_home():
         думаю че тут написать
         """
     )
+
+
+menu()
+show_home()

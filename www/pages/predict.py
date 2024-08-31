@@ -1,5 +1,12 @@
+import os
+import keras
 import streamlit as st
 import numpy as np
+import pandas as pd
+from menu import menu
+import pickle
+
+WORKING_DIR = os.path.abspath('models')
 
 
 def getSteps(min_value, max_value, step_value, decimal_count):
@@ -13,17 +20,14 @@ def validationFloat(value, name):
     try:
         if value:
             value = float(value)
-            if value < 0 or value > 1:
-                st.error(f"{name} must be between 0 and 1.")
+            if value < -1 or value > 100:
+                st.error(f"{name} must be between -1 and 100.")
 
     except ValueError:
-        st.error("This field must be float. (Ex. 0.1)")
+        st.error("This field must be float. (Ex. 0.5)")
 
 
-def show_predict():
-    st.title(f"Cтворити прогноз по обраним")
-    st.title(f" фильтрам")
-
+def tab1_predict():
     with st.form(key='input_form'):
         is_tv_subscriber = st.checkbox('Is TV Subscriber')
         is_movie_package_subscriber = st.checkbox('Is Movie Package Subscriber')
@@ -34,27 +38,68 @@ def show_predict():
         bill_avg = st.text_input('Average Bill', value=0)
         validationFloat(bill_avg, 'Average Bill')
 
-        service_failure_count = st.text_input('Service Failure Count', value=0)
-        validationFloat(service_failure_count, 'Service Failure Count')
+        remaining_contract = st.text_input('Remaining contract', value=0)
+        validationFloat(remaining_contract, 'Remaining_contract')
 
-        download_avg = st.text_input('Average Download Speed', value=0)
-        validationFloat(download_avg, 'Average Download Speed')
+        download_avg = st.text_input('Download avg', value=0)
+        validationFloat(download_avg, 'Download avg')
 
-        upload_avg = st.text_input('Average Upload Speed', value=0)
-        validationFloat(upload_avg, 'Average Upload Speed')
+        upload_avg = st.text_input('Upload avg', value=0)
+        validationFloat(upload_avg, 'Upload avg')
 
         download_over_limit = st.text_input('Download Over Limit', value=0)
         validationFloat(download_over_limit, 'Download Over Limit')
-
         submit_button = st.form_submit_button(label='Submit')
+        if submit_button:
+            data = [
+                [
+                    bool(is_tv_subscriber),
+                    bool(is_movie_package_subscriber),
+                    float(subscription_age),
+                    float(bill_avg),
+                    float(remaining_contract),
+                    float(download_avg),
+                    float(upload_avg),
+                    float(download_over_limit)
+                ]
+            ]
 
-    if submit_button:
-        st.write("Form submitted successfully!")
-        st.write(f"Is TV Subscriber: {is_tv_subscriber}")
-        st.write(f"Is Movie Package Subscriber: {is_movie_package_subscriber}")
-        st.write(f"Subscription Age: {subscription_age}")
-        st.write(f"Average Bill: {bill_avg}")
-        st.write(f"Service Failure Count: {service_failure_count}")
-        st.write(f"Average Download Speed: {download_avg}")
-        st.write(f"Average Upload Speed: {upload_avg}")
-        st.write(f"Download Over Limit: {download_over_limit}")
+            columns = [
+                'is_tv_subscriber',
+                'is_movie_package_subscriber',
+                'subscription_age',
+                'bill_avg',
+                'remaining_contract',
+                'download_avg',
+                'upload_avg',
+                'download_over_limit'
+            ]
+
+            df = pd.DataFrame(data, columns=columns).astype(np.float32)
+            scaler_path = os.path.join(WORKING_DIR, 'nn_scaller.pkl')
+            with open(scaler_path, 'rb') as f:
+                scaler = pickle.load(f)
+
+            data_scaled = scaler.transform(df)
+
+            model_path = os.path.join(WORKING_DIR, 'nn_model.keras')
+            model = keras.saving.load_model(model_path)
+
+            y_pred = (model.predict(data_scaled)).astype("float32")
+            st.write(f"Prediction result: {y_pred[0][0] * 100:.2f}%")
+
+
+def show_predict():
+    st.header('Cтворити прогноз')
+    tab1, tab2 = st.tabs(["По обраним фильтрам", "По датасету"])
+
+    with tab1:
+
+            tab1_predict()
+
+    with tab2:
+        st.write('test')
+
+
+menu()
+show_predict()

@@ -2,6 +2,10 @@ import streamlit as st
 from pathlib import Path
 import json
 
+from menu import menu
+
+
+
 DATASET_IMAGES = {
     "Гістограми значень": 'images/histograms_raw.png',
     "Кореляційна Матриця": 'images/corr_matrix.png'
@@ -30,3 +34,6 @@ def show_dataset():
         st.write(name)
         st.image(image, width=600)
 
+
+menu()
+show_dataset()
