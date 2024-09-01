@@ -53,9 +53,7 @@ def display_report(report_file):
     try:
         with open(report_file, 'rb') as file:
             report = pickle.load(file)
-
             report_df = pd.DataFrame(report).transpose()
-
             st.write("### Звіт по класифікації")
             st.dataframe(report_df)
 
@@ -69,8 +67,8 @@ def show_model():
     working_dir = os.path.abspath('models')
 
     model_options = [
-        "Модель на основі NN",
-        "SVM"
+        "Модель на основі NN (4 layer 3relu+dropout+sigmoid, optimizer Adam)",
+        "Модель на основі NN (4 layer 2relu+sigmoid+early stoping, optimizer Adam, activationFn tahn)"
     ]
 
     st.header("Оберіть модель:", )
@@ -81,7 +79,9 @@ def show_model():
     )
 
     selected_index = model_options.index(model_type)
-    st.write(f"Обрана модель: {model_type}")
+    st.subheader(f"{model_type}")
+    model_history = ''
+    model_report = ''
 
     match selected_index:
         case 0:
@@ -89,25 +89,16 @@ def show_model():
             model_history = 'nn_history.pkl'
             model_scaller = 'nn_scaller.pkl'
             model_report = 'nn_report.pkl'
-        case _:
-            model_name = ''
-            model_history = ''
-            model_report = ''
+        case 1:
+            model_name = 'nn1_model.keras'
+            model_history = 'nn1_history.pkl'
+            model_scaller = 'nn1_scaller.pkl'
+            model_report = 'nn1_report.pkl'
 
-    if 'button_clicked' not in st.session_state:
-        st.session_state.button_clicked = False
-
-    if st.button('Обрати'):
-        st.session_state.button_clicked = True
-
-    if st.session_state.button_clicked:
-        # model_path = os.path.join(working_dir, model_name)
-        model_history_path = os.path.join(working_dir, model_history)
-        model_report_path = os.path.join(working_dir, model_report)
-
-        # model = keras.saving.load_model(model_path)
-        display_model_history(model_history_path)
-        display_report(model_report_path)
+    model_history_path = os.path.join(working_dir, model_history)
+    model_report_path = os.path.join(working_dir, model_report)
+    display_model_history(model_history_path)
+    display_report(model_report_path)
 
 
 menu()

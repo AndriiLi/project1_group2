@@ -27,7 +27,7 @@ def show_about():
         st.write("Volodymyr Biba")
 
     with col2:
-        st.markdown("роль: Team lead (створення та докирізація додатоку)")
+        st.markdown("роль: Team lead (створення та докирізація додатку)")
         st.markdown("роль: Scrum Master (eda, створення моделей)")
         st.markdown("роль: Developer (створення моделей)")
         st.markdown("роль: Developer (створення моделей)")
