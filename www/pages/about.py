@@ -6,18 +6,32 @@ from menu import menu
 
 
 def show_about():
-
-    parent_dir = os.path.dirname(os.path.abspath(__file__))
-    logo_path = os.path.join(parent_dir + '/images', "logo.svg")
     st.markdown(
         '''
-        Данное приложения является дипломным проектом GoIt  
+        Данное приложения является **дипломным проектом GoIt**  
         Курс:  **Data Science and Machine Learning**  
         проект разработан командой: **Augures**
 
         '''
     )
     st.image('images/logo.svg', width=200)
+
+    st.subheader('Структура та ролі команди')
+
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.write("Andrii Li")
+        st.write("Hanna Malygina")
+        st.write("Egor Zaks")
+        st.write("Lis")
+        st.write("Volodymyr Biba")
+
+    with col2:
+        st.markdown("роль: Team lead (створення та докирізація додатоку)")
+        st.markdown("роль: Scrum Master (eda, створення моделей)")
+        st.markdown("роль: Developer (створення моделей)")
+        st.markdown("роль: Developer (створення моделей)")
+        st.markdown("роль: Developer (eda)")
 
 
 menu()

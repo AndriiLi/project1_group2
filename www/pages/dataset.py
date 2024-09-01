@@ -1,10 +1,8 @@
 import streamlit as st
-from pathlib import Path
+import os
 import json
 
 from menu import menu
-
-
 
 DATASET_IMAGES = {
     "Гістограми значень": 'images/histograms_raw.png',
@@ -13,14 +11,14 @@ DATASET_IMAGES = {
 
 
 def show_dataset():
-    st.title("Характеристики датасету")
+    st.title("Характеристики ісходного датасету")
 
-    with open(Path('./').absolute().parent.joinpath('data/internet_service_churn.csv')) as f:
+    with open(os.path.abspath('data/internet_service_churn.csv')) as f:
         st.download_button('Завантажити датасет', f)
 
     st.text("Розмір датасету")
 
-    with open(Path('').joinpath('reports/summary.json')) as f:
+    with open(os.path.abspath('reports/summary.json')) as f:
         summary = json.load(f)
         for key, value in summary.items():
             col = st.columns(2)
@@ -29,9 +27,8 @@ def show_dataset():
             with col[1]:
                 st.write(value)
 
-
     for name, image in DATASET_IMAGES.items():
-        st.write(name)
+        st.subheader(name)
         st.image(image, width=600)
 
 

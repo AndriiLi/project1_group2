@@ -2,7 +2,7 @@ import os
 import streamlit as st
 import matplotlib.pyplot as plt
 import pickle
-import keras
+import pandas as pd
 from menu import menu
 
 
@@ -53,16 +53,16 @@ def display_report(report_file):
     try:
         with open(report_file, 'rb') as file:
             report = pickle.load(file)
-            for label, metrics in report.items():
-                st.write(f"***Class {label}:***")
-                if isinstance(metrics, dict):
-                    for metric, value in metrics.items():
-                        st.write(f"{metric}: {value}")
-                else:
-                    st.write(f"{metrics}")
+
+            report_df = pd.DataFrame(report).transpose()
+
+            st.write("### Звіт по класифікації")
+            st.dataframe(report_df)
 
     except AttributeError:
         st.write("Report is not available for this model.")
+    except FileNotFoundError:
+        st.write(f"File {report_file} not found.")
 
 
 def show_model():
