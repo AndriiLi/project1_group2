@@ -5,7 +5,7 @@
 
   `docker compose up -d` or `docker-compose up -d` 
 
-  ( depends on you docker compose version)
+  ( depends on your docker compose version)
 
   than open your browser `http://localhost:8501`
 
