@@ -32,6 +32,18 @@ def validationFloat(value, name):
         st.error("This field must be float. (Ex. 0.5)")
 
 
+def validationFloatPositive(value, name):
+    if value is None:
+        return
+    try:
+        if value:
+            value = float(value)
+            if value < 0 or value > 100:
+                st.error(f"{name} must be between 0 and 100.")
+
+    except ValueError as e:
+        st.error("This field must be float. (Ex. 0.5)")
+
 def load_scaler(model_index):
     if model_index == 0:
         scaler_name = f"nn_scaller.pkl"
@@ -60,22 +72,22 @@ def predict_by_custom_params(model_index):
         is_movie_package_subscriber = st.checkbox('Is Movie Package Subscriber')
 
         subscription_age = st.text_input('Subscription Age', value=0)
-        validationFloat(subscription_age, 'Subscription Age')
+        validationFloatPositive(subscription_age, 'Subscription Age')
 
         bill_avg = st.text_input('Average Bill', value=0)
-        validationFloat(bill_avg, 'Average Bill')
+        validationFloatPositive(bill_avg, 'Average Bill')
 
-        remaining_contract = st.text_input('Remaining contract', value=0)
+        remaining_contract = st.text_input('Remaining contract (-1 if prepaynment)', value=0)
         validationFloat(remaining_contract, 'Remaining_contract')
 
         download_avg = st.text_input('Download avg', value=0)
-        validationFloat(download_avg, 'Download avg')
+        validationFloatPositive(download_avg, 'Download avg')
 
         upload_avg = st.text_input('Upload avg', value=0)
-        validationFloat(upload_avg, 'Upload avg')
+        validationFloatPositive(upload_avg, 'Upload avg')
 
         download_over_limit = st.text_input('Download Over Limit', value=0)
-        validationFloat(download_over_limit, 'Download Over Limit')
+        validationFloatPositive(download_over_limit, 'Download Over Limit')
         submit_button = st.form_submit_button(label='Прогнозувати')
         if submit_button:
             data = [
