@@ -15,27 +15,27 @@ def show_dataset():
     st.subheader("Пояснення колонок:")
     st.markdown(
         '''
-        id [int]: id користувача
+        **id [int]**: id користувача
 
-        is_tv_subscriber [0 or 1]: чи є підписником на телебачення
+        **is_tv_subscriber [0 or 1]**: чи є підписником на телебачення
         
-        is_movie_package_subscriber [0 or 1]: чи є підписником на фільми
+        **is_movie_package_subscriber [0 or 1]**: чи є підписником на фільми
         
-        subscription_age [float]: як довго є клієнтом компанії
+        **subscription_age [float]**: як довго є клієнтом компанії
         
-        bill_avg [int]: середній рахунок
+        **bill_avg [int]**: середній рахунок
         
-        remaining_contract [float]: скільки контракту залишилось
+        **remaining_contract [float]**: скільки контракту залишилось
         
-        service_failure_count [int]: кількість відмов сервісу
+        **service_failure_count [int]**: кількість відмов сервісу
         
-        download_avg [float]: середній розмір завантажених даних
+        **download_avg [float]**: середній розмір завантажених даних
         
-        upload_avg [float]: середній розмір вивантажених даних
+        **upload_avg [float]**: середній розмір вивантажених даних
         
-        download_over_limit [int]: перевищення ліміту завантажень
+        **download_over_limit [int]**: перевищення ліміту завантажень
         
-        churn [0 or 1]: чи покунув користувач компанію
+        **churn [0 or 1]**: чи покунув користувач компанію
         '''
     )
 
@@ -60,11 +60,11 @@ def show_dataset():
     st.subheader("Очистка і заповнення пропущених даних")
     st.markdown(
         '''
-        Видалено 381 рядків з відсутніми значеннями download_avg i upload_avg
+        Видалено **381** рядків з відсутніми значеннями **download_avg** i **upload_avg**
         
-        Відсутні значення remaining_contract замінені на -1 (припущення, що ці клієнти на передплаті і контракт у них вже закінчився)
+        Відсутні значення **remaining_contract** замінені на -1 (припущення, що ці клієнти на передплаті і контракт у них вже закінчився)
         
-        Колонка service_failure_count не береться до уваги, оскільк не виявлено ніяких кореляцій з churn
+        Колонка **service_failure_count** не береться до уваги, оскільк не виявлено ніяких кореляцій з **churn**
         '''
     )
 

@@ -20,7 +20,7 @@ def show_about():
 
     col1, col2 = st.columns([1, 3])
     with col1:
-        st.write("Andrii Li")
+        st.write("Andrii Lisieienko")
         st.write("Hanna Malygina")
         st.write("Egor Zaks")
         st.write("Ihor Lytvynenko")

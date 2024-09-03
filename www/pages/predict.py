@@ -44,6 +44,7 @@ def validationFloatPositive(value, name):
     except ValueError as e:
         st.error("This field must be float. (Ex. 0.5)")
 
+
 def load_scaler(model_index):
     if model_index == 0:
         scaler_name = f"nn_scaller.pkl"
@@ -118,8 +119,6 @@ def predict_by_custom_params(model_index):
 
             scaler = load_scaler(model_index)
 
-            print(scaler)
-
             data_scaled = scaler.transform(df)
             model = load_model(model_index)
 
@@ -150,7 +149,11 @@ def predict_by_dataset(model_index):
             data_scaled = scaler.transform(df)
 
             model = load_model(model_index)
-            predictions = []
+            result_column = ['id']
+            result_column.extend(df.columns)
+            result_column.append('predictions')
+
+            result_df = pd.DataFrame(columns=result_column)
             counter_threshold = 0
 
             for i in range(len(data_scaled)):
@@ -164,14 +167,16 @@ def predict_by_dataset(model_index):
 
                 if float(predict_value) > float(threshold * 100):
                     counter_threshold += 1
-
-                predictions.append(f"{predict_value}%")
-
-            df['Predictoin'] = predictions
+                    new_row = {
+                        'id': i + 1,
+                        **{col: df.iloc[i][col] for col in df.columns},
+                        'predictions': f"{predict_value}%"
+                    }
+                    result_df = result_df._append(new_row, ignore_index=True)
 
             st.subheader(f"Кількість записів з прогнозом більше введеного значення порогу: {counter_threshold}")
 
-            csv = convert_df(df)
+            csv = convert_df(result_df)
             st.download_button(
                 "Скачати датасет з прогнозом",
                 csv,
@@ -217,5 +222,3 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 menu()
 show_predict()
-
-
