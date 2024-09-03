@@ -20,11 +20,11 @@ def show_about():
 
     col1, col2 = st.columns([1, 3])
     with col1:
-        st.write("Andrii Li")
+        st.write("Andrii Lisieienko")
         st.write("Hanna Malygina")
         st.write("Egor Zaks")
         st.write("Lis")
-        st.write("Volodymyr Biba")
+        st.write("Volodymyr Byba")
 
     with col2:
         st.markdown("роль: Team lead (створення та докирізація додатку)")
