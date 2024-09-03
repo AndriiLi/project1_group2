@@ -4,6 +4,7 @@ from menu import menu
 
 def show_home():
     st.subheader('Опис проєкту')
+    st.link_button('Презентація', 'https://onedrive.live.com/edit?id=569F0BBC6B4D5A2C!41499&resid=569F0BBC6B4D5A2C!41499&ithint=file%2cpptx&authkey=!ACV3_xbenfrHHuo&wdo=2&cid=569f0bbc6b4d5a2c')
     st.write(
         """
         Цей проєкт спрямований на розробку прогностичної моделі, яка дозволить передбачити ймовірність відтоку клієнтів 
