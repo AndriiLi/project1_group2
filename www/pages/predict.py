@@ -76,7 +76,7 @@ def predict_by_custom_params(model_index):
 
         download_over_limit = st.text_input('Download Over Limit', value=0)
         validationFloat(download_over_limit, 'Download Over Limit')
-        submit_button = st.form_submit_button(label='С прогнозувати')
+        submit_button = st.form_submit_button(label='Прогнозувати')
         if submit_button:
             data = [
                 [
@@ -105,6 +105,9 @@ def predict_by_custom_params(model_index):
             df = pd.DataFrame(data, columns=columns).astype(np.float32)
 
             scaler = load_scaler(model_index)
+
+            print(scaler)
+
             data_scaled = scaler.transform(df)
             model = load_model(model_index)
 
@@ -119,7 +122,7 @@ def predict_by_dataset(model_index):
     if uploaded_file is not None:
 
         threshold = st.select_slider(
-            "Оберіть значення treshhold",
+            "Оберіть значення порогу",
             options=getSteps(0, 1.01, 0.01, 2),
         )
 
@@ -135,11 +138,7 @@ def predict_by_dataset(model_index):
             data_scaled = scaler.transform(df)
 
             model = load_model(model_index)
-            result_column = ['id']
-            result_column.extend(df.columns)
-            result_column.append('predictions')
-
-            result_df = pd.DataFrame(columns=result_column)
+            predictions = []
             counter_threshold = 0
 
             for i in range(len(data_scaled)):
@@ -154,16 +153,13 @@ def predict_by_dataset(model_index):
                 if float(predict_value) > float(threshold * 100):
                     counter_threshold += 1
 
-                    new_row = {
-                        'id': i + 1,
-                        **{col: df.iloc[i][col] for col in df.columns},
-                        'predictions': f"{predict_value}%"
-                    }
-                    result_df = result_df._append(new_row, ignore_index=True)
+                predictions.append(f"{predict_value}%")
 
-            st.subheader(f"Кількість записів з прогнозом більше введеного значення threshold: {counter_threshold}")
+            df['Predictoin'] = predictions
 
-            csv = convert_df(result_df)
+            st.subheader(f"Кількість записів з прогнозом більше введеного значення порогу: {counter_threshold}")
+
+            csv = convert_df(df)
             st.download_button(
                 "Скачати датасет з прогнозом",
                 csv,
@@ -209,3 +205,5 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 menu()
 show_predict()
+
+
