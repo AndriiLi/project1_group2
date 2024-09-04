@@ -127,6 +127,20 @@ def predict_by_custom_params(model_index):
 
 
 def predict_by_dataset(model_index):
+    st.subheader('Приклад датасету')
+    data_example = {
+        'is_tv_subscriber': [1],
+        'is_movie_package_subscriber': [0],
+        'subscription_age': [11.95],
+        'bill_avg': [25],
+        'remaining_contract': [0.14],
+        'download_avg': [8.4],
+        'upload_avg': [2.3],
+        'download_over_limit': [0]
+    }
+    df_example = pd.DataFrame(data_example)
+    st.table(df_example)
+
     st.subheader('Завантажити датасет')
     uploaded_file = st.file_uploader("оберить файл датасету")
 
