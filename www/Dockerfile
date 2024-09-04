@@ -9,15 +9,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 COPY requirements.txt .
-
 RUN pip3 install -r requirements.txt
 
-COPY . .
-
 RUN mkdir -p /root/.streamlit
-
 COPY ./.streamlit  /root/.streamlit
-
 
 EXPOSE 8501
 
