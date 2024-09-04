@@ -8,7 +8,7 @@ from menu import menu
 def show_about():
     st.markdown(
         '''
-        Цей додаток є **дипломним проєктом для GoIt**  
+        Цей додаток є **дипломним проєктом GoIt**  
         Курс:  **Data Science and Machine Learning**  
         Проєкт розроблений командою: **Augures**
 
