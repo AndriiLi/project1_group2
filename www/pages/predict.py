@@ -123,7 +123,7 @@ def predict_by_custom_params(model_index):
             model = load_model(model_index)
 
             y_pred = (model.predict(data_scaled)).astype("float32")
-            st.subheader(f"Результат прогнозу: {y_pred[0][0] * 100:.2f}%")
+            st.subheader(f"Результат прогнозу: з вірогідностю {y_pred[0][0] * 100:.2f}% клієнт піде")
 
 
 def predict_by_dataset(model_index):
@@ -188,7 +188,7 @@ def predict_by_dataset(model_index):
                     }
                     result_df = result_df._append(new_row, ignore_index=True)
 
-            st.subheader(f"Кількість записів з прогнозом більше введеного значення порогу: {counter_threshold}")
+            st.subheader(f"Кількість клієтнтів з прогнозом більше введеного значення порогу: {counter_threshold} найшвидше за все підуть")
 
             csv = convert_df(result_df)
             st.download_button(
