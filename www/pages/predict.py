@@ -189,7 +189,7 @@ def predict_by_dataset(model_index):
                     result_df = result_df._append(new_row, ignore_index=True)
 
             st.subheader(f"Кількість клієнтів з ймовірністю відтоку більшою, ніж вибраний поріг: ");
-            st.subheader(f"{counter_threshold} підуть з ймовірністю {float(threshold):.2f}% або більше")
+            st.subheader(f"{counter_threshold} підуть з ймовірністю {float(threshold):.0f}% або більше")
 
             csv = convert_df(result_df)
             st.download_button(
