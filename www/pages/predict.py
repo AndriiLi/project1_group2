@@ -147,8 +147,8 @@ def predict_by_dataset(model_index):
     if uploaded_file is not None:
 
         threshold = st.select_slider(
-            "Оберіть значення порогу",
-            options=getSteps(0, 1.01, 0.01, 2),
+            "Оберіть значення порогу,%",
+            options=getSteps(0, 101, 1, 2),
         )
 
         run_predict = st.button('Зробити прогноз')
@@ -179,7 +179,7 @@ def predict_by_dataset(model_index):
                 else:
                     predict_value = f"{0 if prediction[0][0] is None else float(prediction.argmax() * 100):.2f}"
 
-                if float(predict_value) > float(threshold * 100):
+                if float(predict_value) > float(threshold):
                     counter_threshold += 1
                     new_row = {
                         'id': i + 1,
@@ -188,7 +188,8 @@ def predict_by_dataset(model_index):
                     }
                     result_df = result_df._append(new_row, ignore_index=True)
 
-            st.subheader(f"Кількість клієтнтів з прогнозом більше введеного значення порогу: {counter_threshold} найшвидше за все підуть")
+            st.subheader(f"Кількість клієнтів з ймовірністю відтоку більшою, ніж вибраний поріг: "
+                         f"{counter_threshold} підуть з ймовірністю {float(threshold):.2f}% або більше")
 
             csv = convert_df(result_df)
             st.download_button(
