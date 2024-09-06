@@ -123,7 +123,7 @@ def predict_by_custom_params(model_index):
             model = load_model(model_index)
 
             y_pred = (model.predict(data_scaled)).astype("float32")
-            st.subheader(f"Результат прогнозу: з вірогідностю {y_pred[0][0] * 100:.2f}% клієнт піде")
+            st.subheader(f"Результат прогнозу: з вірогідностю {y_pred[0][0]*100:.0f}% клієнт піде")
 
 
 def predict_by_dataset(model_index):
